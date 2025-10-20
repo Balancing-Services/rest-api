@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Official Python client library generated from OpenAPI specification
+
 ## [1.0.0] - 2025-10-20
 
 ### Added

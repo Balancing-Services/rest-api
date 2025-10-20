@@ -62,6 +62,43 @@ The complete OpenAPI 3.0 specification is available in [`openapi.yaml`](./openap
 - Understand detailed request/response schemas
 - View all available parameters and error responses
 
+## Client Libraries
+
+### Python Client
+
+We provide an official Python client library generated from the OpenAPI specification.
+
+**Quick example:**
+
+```python
+from balancing_services import AuthenticatedClient
+from balancing_services.api.default import get_imbalance_prices
+
+client = AuthenticatedClient(
+    base_url="https://api.balancing.services/v1",
+    token="YOUR_API_TOKEN"
+)
+
+response = get_imbalance_prices.sync_detailed(
+    client=client,
+    area="EE",
+    period_start_at="2025-01-01T00:00:00Z",
+    period_end_at="2025-01-02T00:00:00Z"
+)
+
+if response.status_code == 200:
+    data = response.parsed
+    # Process your data
+```
+
+**Features:**
+- Type-safe with full type hints
+- Async/await support
+- Comprehensive models for all API responses
+- Built with modern Python (httpx, attrs)
+
+For complete documentation, usage examples, and API reference, see [clients/python/README.md](./clients/python/README.md).
+
 ## Versioning
 
 This project follows [Semantic Versioning](https://semver.org/):
