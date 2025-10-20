@@ -1,6 +1,6 @@
 # Balancing Services Python Client
 
-Python client library for the [Balancing Services REST API](https://balancing.services). Access European electricity balancing market data with a modern, type-safe Python interface.
+Python client library for the [Balancing Services REST API](https://api.balancing.services). Access European electricity balancing market data with a modern, type-safe Python interface.
 
 ## Features
 
@@ -12,7 +12,17 @@ Python client library for the [Balancing Services REST API](https://balancing.se
 
 ## Installation
 
-The client is not yet published to PyPI. To install from source:
+```bash
+uv pip install balancing-services
+```
+
+Or with pip:
+
+```bash
+pip install balancing-services
+```
+
+For development, install from source:
 
 ```bash
 cd clients/python

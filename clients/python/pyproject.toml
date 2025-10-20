@@ -49,10 +49,8 @@ Changelog = "https://github.com/balancing-services/rest-api/blob/main/CHANGELOG.
 [tool.hatch.build.targets.wheel]
 packages = ["balancing_services"]
 
-[tool.hatch.build]
-include = [
-    "balancing_services/py.typed",
-]
+[tool.hatch.build.targets.sdist.force-include]
+"../../LICENSE" = "LICENSE"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
