@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2025-10-22
+
 ### Added
 - Official Python client library generated from OpenAPI specification
 - `procuredAt` timestamp field to `BalancingCapacityPrice` and `BalancingCapacityVolume` schemas (#1)
@@ -37,5 +39,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - UTC timestamp-based period filtering
 - OpenAPI 3.0.3 specification
 
-[Unreleased]: https://github.com/balancing-services/rest-api/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/balancing-services/rest-api/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/balancing-services/rest-api/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/balancing-services/rest-api/releases/tag/v1.0.0
