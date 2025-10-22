@@ -1,6 +1,6 @@
 import datetime
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
 
 import httpx
 
@@ -19,8 +19,8 @@ def _get_kwargs(
     period_start_at: datetime.datetime,
     period_end_at: datetime.datetime,
     reserve_type: ReserveType,
-    cursor: Union[Unset, str] = UNSET,
-    limit: Union[Unset, int] = 100,
+    cursor: Unset | str = UNSET,
+    limit: Unset | int = 100,
 ) -> dict[str, Any]:
     params: dict[str, Any] = {}
 
@@ -52,8 +52,8 @@ def _get_kwargs(
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[BalancingCapacityBidsResponse, Problem]]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> BalancingCapacityBidsResponse | Problem | None:
     if response.status_code == 200:
         response_200 = BalancingCapacityBidsResponse.from_dict(response.json())
 
@@ -101,8 +101,8 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[BalancingCapacityBidsResponse, Problem]]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> Response[BalancingCapacityBidsResponse | Problem]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -113,14 +113,14 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     area: Area,
     period_start_at: datetime.datetime,
     period_end_at: datetime.datetime,
     reserve_type: ReserveType,
-    cursor: Union[Unset, str] = UNSET,
-    limit: Union[Unset, int] = 100,
-) -> Response[Union[BalancingCapacityBidsResponse, Problem]]:
+    cursor: Unset | str = UNSET,
+    limit: Unset | int = 100,
+) -> Response[BalancingCapacityBidsResponse | Problem]:
     """Get balancing capacity bids
 
      Returns balancing capacity bids for the specified area within the given time period. Supports
@@ -160,14 +160,14 @@ def sync_detailed(
 
 def sync(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     area: Area,
     period_start_at: datetime.datetime,
     period_end_at: datetime.datetime,
     reserve_type: ReserveType,
-    cursor: Union[Unset, str] = UNSET,
-    limit: Union[Unset, int] = 100,
-) -> Optional[Union[BalancingCapacityBidsResponse, Problem]]:
+    cursor: Unset | str = UNSET,
+    limit: Unset | int = 100,
+) -> BalancingCapacityBidsResponse | Problem | None:
     """Get balancing capacity bids
 
      Returns balancing capacity bids for the specified area within the given time period. Supports
@@ -202,14 +202,14 @@ def sync(
 
 async def asyncio_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     area: Area,
     period_start_at: datetime.datetime,
     period_end_at: datetime.datetime,
     reserve_type: ReserveType,
-    cursor: Union[Unset, str] = UNSET,
-    limit: Union[Unset, int] = 100,
-) -> Response[Union[BalancingCapacityBidsResponse, Problem]]:
+    cursor: Unset | str = UNSET,
+    limit: Unset | int = 100,
+) -> Response[BalancingCapacityBidsResponse | Problem]:
     """Get balancing capacity bids
 
      Returns balancing capacity bids for the specified area within the given time period. Supports
@@ -247,14 +247,14 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     area: Area,
     period_start_at: datetime.datetime,
     period_end_at: datetime.datetime,
     reserve_type: ReserveType,
-    cursor: Union[Unset, str] = UNSET,
-    limit: Union[Unset, int] = 100,
-) -> Optional[Union[BalancingCapacityBidsResponse, Problem]]:
+    cursor: Unset | str = UNSET,
+    limit: Unset | int = 100,
+) -> BalancingCapacityBidsResponse | Problem | None:
     """Get balancing capacity bids
 
      Returns balancing capacity bids for the specified area within the given time period. Supports

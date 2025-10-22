@@ -1,6 +1,6 @@
 import datetime
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
 
 import httpx
 
@@ -41,8 +41,8 @@ def _get_kwargs(
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[ImbalancePricesResponse, Problem]]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> ImbalancePricesResponse | Problem | None:
     if response.status_code == 200:
         response_200 = ImbalancePricesResponse.from_dict(response.json())
 
@@ -90,8 +90,8 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[ImbalancePricesResponse, Problem]]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> Response[ImbalancePricesResponse | Problem]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -102,11 +102,11 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     area: Area,
     period_start_at: datetime.datetime,
     period_end_at: datetime.datetime,
-) -> Response[Union[ImbalancePricesResponse, Problem]]:
+) -> Response[ImbalancePricesResponse | Problem]:
     """Get imbalance prices for an area
 
      Returns imbalance prices for the specified area within the given time period
@@ -139,11 +139,11 @@ def sync_detailed(
 
 def sync(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     area: Area,
     period_start_at: datetime.datetime,
     period_end_at: datetime.datetime,
-) -> Optional[Union[ImbalancePricesResponse, Problem]]:
+) -> ImbalancePricesResponse | Problem | None:
     """Get imbalance prices for an area
 
      Returns imbalance prices for the specified area within the given time period
@@ -171,11 +171,11 @@ def sync(
 
 async def asyncio_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     area: Area,
     period_start_at: datetime.datetime,
     period_end_at: datetime.datetime,
-) -> Response[Union[ImbalancePricesResponse, Problem]]:
+) -> Response[ImbalancePricesResponse | Problem]:
     """Get imbalance prices for an area
 
      Returns imbalance prices for the specified area within the given time period
@@ -206,11 +206,11 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     area: Area,
     period_start_at: datetime.datetime,
     period_end_at: datetime.datetime,
-) -> Optional[Union[ImbalancePricesResponse, Problem]]:
+) -> ImbalancePricesResponse | Problem | None:
     """Get imbalance prices for an area
 
      Returns imbalance prices for the specified area within the given time period

@@ -1,11 +1,5 @@
 from collections.abc import Mapping
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    TypeVar,
-    Union,
-    cast,
-)
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -34,7 +28,7 @@ class ImbalancePricesResponse:
     queried_period: "Period"
     data: list["ImbalancePrices"]
     has_more: bool
-    next_cursor: Union[None, Unset, str] = UNSET
+    next_cursor: None | Unset | str = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -47,7 +41,7 @@ class ImbalancePricesResponse:
 
         has_more = self.has_more
 
-        next_cursor: Union[None, Unset, str]
+        next_cursor: None | Unset | str
         if isinstance(self.next_cursor, Unset):
             next_cursor = UNSET
         else:
@@ -84,12 +78,12 @@ class ImbalancePricesResponse:
 
         has_more = d.pop("hasMore")
 
-        def _parse_next_cursor(data: object) -> Union[None, Unset, str]:
+        def _parse_next_cursor(data: object) -> None | Unset | str:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, str], data)
+            return cast(None | Unset | str, data)
 
         next_cursor = _parse_next_cursor(d.pop("nextCursor", UNSET))
 

@@ -1,12 +1,12 @@
+import datetime
 from collections.abc import Mapping
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    TypeVar,
-)
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from dateutil.parser import isoparse
+
+from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.period import Period
@@ -21,16 +21,26 @@ class BalancingCapacityPrice:
     Attributes:
         period (Period):
         price (float): Price per MW per hour in the specified currency Example: 12.5.
+        procured_at (Union[Unset, datetime.datetime]): **EXPERIMENTAL**: Timestamp when the capacity was procured
+            (allocation time or gate closure time).
+            Used to distinguish different auctions (e.g., yearly vs hourly, or multiple procurement rounds).
+            This field is experimental and may be changed or removed without a deprecation period.
+             Example: 2024-08-15T14:30:00Z.
     """
 
     period: "Period"
     price: float
+    procured_at: Unset | datetime.datetime = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         period = self.period.to_dict()
 
         price = self.price
+
+        procured_at: Unset | str = UNSET
+        if not isinstance(self.procured_at, Unset):
+            procured_at = self.procured_at.isoformat()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -40,6 +50,8 @@ class BalancingCapacityPrice:
                 "price": price,
             }
         )
+        if procured_at is not UNSET:
+            field_dict["procuredAt"] = procured_at
 
         return field_dict
 
@@ -52,9 +64,17 @@ class BalancingCapacityPrice:
 
         price = d.pop("price")
 
+        _procured_at = d.pop("procuredAt", UNSET)
+        procured_at: Unset | datetime.datetime
+        if isinstance(_procured_at, Unset):
+            procured_at = UNSET
+        else:
+            procured_at = isoparse(_procured_at)
+
         balancing_capacity_price = cls(
             period=period,
             price=price,
+            procured_at=procured_at,
         )
 
         balancing_capacity_price.additional_properties = d
