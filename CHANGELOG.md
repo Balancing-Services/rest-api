@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Official Python client library generated from OpenAPI specification
+- `procuredAt` timestamp field to `BalancingCapacityPrice` and `BalancingCapacityVolume` schemas (#1)
+  - Enables distinguishing between multiple procurement rounds (e.g., D-2 vs D-1 auctions)
+  - Marked as EXPERIMENTAL - may change without standard deprecation period
+  - Optional field, initially rolled out for markets with multiple auctions
 
 ## [1.0.0] - 2025-10-20
 
