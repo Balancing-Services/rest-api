@@ -78,22 +78,6 @@ client = AuthenticatedClient(
 )
 ```
 
-## Available Endpoints
-
-### Imbalance Data
-- `get_imbalance_prices` - Get imbalance prices for an area
-- `get_imbalance_total_volumes` - Get total imbalance volumes
-
-### Balancing Energy
-- `get_balancing_energy_activated_volumes` - Get activated balancing energy volumes
-- `get_balancing_energy_prices` - Get balancing energy prices
-- `get_balancing_energy_bids` - Get balancing energy bids (paginated)
-
-### Balancing Capacity
-- `get_balancing_capacity_bids` - Get balancing capacity bids (paginated)
-- `get_balancing_capacity_prices` - Get balancing capacity prices
-- `get_balancing_capacity_procured_volumes` - Get procured balancing capacity volumes
-
 ## Usage Examples
 
 ### Get Balancing Energy Bids with Pagination
