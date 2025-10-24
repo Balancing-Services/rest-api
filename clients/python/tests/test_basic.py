@@ -5,7 +5,6 @@ These tests verify that the generated client has the expected structure
 and can be instantiated correctly.
 """
 
-import pytest
 from balancing_services import AuthenticatedClient, Client
 from balancing_services.api.default import (
     get_balancing_capacity_bids,
@@ -18,8 +17,8 @@ from balancing_services.api.default import (
     get_imbalance_total_volumes,
 )
 from balancing_services.models import (
-    Area,
     ActivationType,
+    Area,
     BidStatus,
     Currency,
     Direction,

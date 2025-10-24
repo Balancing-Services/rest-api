@@ -2,14 +2,16 @@
 Integration tests using respx to mock HTTP responses.
 """
 
+from datetime import datetime, timezone
+
 import pytest
 import respx
-from datetime import datetime, timezone
 from httpx import Response
+
 from balancing_services import AuthenticatedClient
 from balancing_services.api.default import (
-    get_imbalance_prices,
     get_balancing_energy_bids,
+    get_imbalance_prices,
 )
 from balancing_services.models import Area, ReserveType
 

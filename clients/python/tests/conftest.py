@@ -3,6 +3,7 @@ Pytest configuration and fixtures for testing the Balancing Services client.
 """
 
 import pytest
+
 from balancing_services import AuthenticatedClient
 
 

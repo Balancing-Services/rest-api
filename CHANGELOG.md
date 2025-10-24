@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2025-10-24
+
 ### Fixed
 - Python client documentation examples now use correct types (`Area` enum and `datetime` objects) instead of strings (#1318)
+
+### Added
+- Automated tests for README code examples to prevent documentation drift
 
 ## [1.1.0] - 2025-10-22
 
@@ -42,6 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - UTC timestamp-based period filtering
 - OpenAPI 3.0.3 specification
 
-[Unreleased]: https://github.com/balancing-services/rest-api/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/balancing-services/rest-api/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/balancing-services/rest-api/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/balancing-services/rest-api/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/balancing-services/rest-api/releases/tag/v1.0.0

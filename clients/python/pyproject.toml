@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "balancing-services"
-version = "1.1.0"
+version = "1.1.1"
 description = "Official Python client for accessing European electricity balancing market data via the Balancing Services REST API"
 readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.10"

@@ -4,13 +4,12 @@ Test that code examples in README.md actually execute without errors.
 This test extracts Python code blocks from README and executes them with mocked HTTP responses.
 """
 
-import ast
 import re
+from pathlib import Path
+
 import pytest
 import respx
-from pathlib import Path
 from httpx import Response
-
 
 # Hardcoded list of examples we have tests for
 # If you add a new example to README, add it here and create a test for it

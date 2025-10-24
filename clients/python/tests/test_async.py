@@ -2,14 +2,14 @@
 Async tests for the Balancing Services Python client.
 """
 
+
 import pytest
-from datetime import datetime, timezone
+
 from balancing_services import AuthenticatedClient
 from balancing_services.api.default import (
-    get_imbalance_prices,
     get_balancing_energy_prices,
+    get_imbalance_prices,
 )
-from balancing_services.models import Area, ReserveType, Direction
 
 
 class TestAsyncClient:
