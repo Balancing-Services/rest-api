@@ -33,10 +33,9 @@ uv pip install -e .
 
 ```python
 from balancing_services import AuthenticatedClient
-from balancing_services.api.default import (
-    get_imbalance_prices,
-    get_balancing_energy_bids,
-)
+from balancing_services.api.default import get_imbalance_prices
+from balancing_services.models import Area
+from datetime import datetime
 
 # Create an authenticated client
 client = AuthenticatedClient(
@@ -47,9 +46,9 @@ client = AuthenticatedClient(
 # Get imbalance prices for Estonia
 response = get_imbalance_prices.sync_detailed(
     client=client,
-    area="EE",
-    period_start_at="2025-01-01T00:00:00Z",
-    period_end_at="2025-01-02T00:00:00Z"
+    area=Area.EE,
+    period_start_at=datetime.fromisoformat("2025-01-01T00:00:00Z"),
+    period_end_at=datetime.fromisoformat("2025-01-02T00:00:00Z")
 )
 
 if response.status_code == 200:
@@ -85,16 +84,18 @@ client = AuthenticatedClient(
 ```python
 from balancing_services import AuthenticatedClient
 from balancing_services.api.default import get_balancing_energy_bids
+from balancing_services.models import Area, ReserveType
+from datetime import datetime
 
 client = AuthenticatedClient(base_url="https://api.balancing.services/v1", token="YOUR_TOKEN")
 
 # First page
 response = get_balancing_energy_bids.sync_detailed(
     client=client,
-    area="EE",
-    period_start_at="2025-01-01T00:00:00Z",
-    period_end_at="2025-01-02T00:00:00Z",
-    reserve_type="aFRR",
+    area=Area.EE,
+    period_start_at=datetime.fromisoformat("2025-01-01T00:00:00Z"),
+    period_end_at=datetime.fromisoformat("2025-01-02T00:00:00Z"),
+    reserve_type=ReserveType.AFRR,
     limit=100
 )
 
@@ -111,10 +112,10 @@ if response.status_code == 200:
     if data.has_more and data.next_cursor:
         next_response = get_balancing_energy_bids.sync_detailed(
             client=client,
-            area="EE",
-            period_start_at="2025-01-01T00:00:00Z",
-            period_end_at="2025-01-02T00:00:00Z",
-            reserve_type="aFRR",
+            area=Area.EE,
+            period_start_at=datetime.fromisoformat("2025-01-01T00:00:00Z"),
+            period_end_at=datetime.fromisoformat("2025-01-02T00:00:00Z"),
+            reserve_type=ReserveType.AFRR,
             cursor=data.next_cursor,
             limit=100
         )
@@ -126,6 +127,8 @@ if response.status_code == 200:
 import asyncio
 from balancing_services import AuthenticatedClient
 from balancing_services.api.default import get_imbalance_prices
+from balancing_services.models import Area
+from datetime import datetime
 
 async def fetch_prices():
     client = AuthenticatedClient(
@@ -135,9 +138,9 @@ async def fetch_prices():
 
     response = await get_imbalance_prices.asyncio_detailed(
         client=client,
-        area="EE",
-        period_start_at="2025-01-01T00:00:00Z",
-        period_end_at="2025-01-02T00:00:00Z"
+        area=Area.EE,
+        period_start_at=datetime.fromisoformat("2025-01-01T00:00:00Z"),
+        period_end_at=datetime.fromisoformat("2025-01-02T00:00:00Z")
     )
 
     if response.status_code == 200:
@@ -153,15 +156,16 @@ prices = asyncio.run(fetch_prices())
 ```python
 from balancing_services import AuthenticatedClient
 from balancing_services.api.default import get_imbalance_prices
-from balancing_services.models import Problem
+from balancing_services.models import Area
+from datetime import datetime
 
 client = AuthenticatedClient(base_url="https://api.balancing.services/v1", token="YOUR_TOKEN")
 
 response = get_imbalance_prices.sync_detailed(
     client=client,
-    area="EE",
-    period_start_at="2025-01-01T00:00:00Z",
-    period_end_at="2025-01-02T00:00:00Z"
+    area=Area.EE,
+    period_start_at=datetime.fromisoformat("2025-01-01T00:00:00Z"),
+    period_end_at=datetime.fromisoformat("2025-01-02T00:00:00Z")
 )
 
 if response.status_code == 200:
