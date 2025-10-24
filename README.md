@@ -73,6 +73,8 @@ We provide an official Python client library generated from the OpenAPI specific
 ```python
 from balancing_services import AuthenticatedClient
 from balancing_services.api.default import get_imbalance_prices
+from balancing_services.models import Area
+from datetime import datetime
 
 client = AuthenticatedClient(
     base_url="https://api.balancing.services/v1",
@@ -81,9 +83,9 @@ client = AuthenticatedClient(
 
 response = get_imbalance_prices.sync_detailed(
     client=client,
-    area="EE",
-    period_start_at="2025-01-01T00:00:00Z",
-    period_end_at="2025-01-02T00:00:00Z"
+    area=Area.EE,
+    period_start_at=datetime.fromisoformat("2025-01-01T00:00:00Z"),
+    period_end_at=datetime.fromisoformat("2025-01-02T00:00:00Z")
 )
 
 if response.status_code == 200:
