@@ -72,3 +72,6 @@ dmypy.json
 # uv
 .uv/
 uv.lock
+
+# Generated from pyproject.toml.draft
+pyproject.toml
