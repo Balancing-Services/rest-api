@@ -91,7 +91,7 @@ def mock_balancing_energy_bids_response():
 @respx.mock
 def test_get_imbalance_prices_success(authenticated_client, mock_imbalance_prices_response):
     """Test successful imbalance prices request."""
-    route = respx.get(
+    respx.get(
         "https://api.balancing.services/v1/imbalance/prices"
     ).mock(return_value=Response(200, json=mock_imbalance_prices_response))
 
@@ -119,7 +119,7 @@ def test_get_imbalance_prices_unauthorized(authenticated_client):
         "detail": "Invalid or missing authentication token"
     }
 
-    route = respx.get(
+    respx.get(
         "https://api.balancing.services/v1/imbalance/prices"
     ).mock(return_value=Response(401, json=error_response))
 
@@ -145,7 +145,7 @@ def test_get_imbalance_prices_bad_request(authenticated_client):
         "detail": "Invalid period range"
     }
 
-    route = respx.get(
+    respx.get(
         "https://api.balancing.services/v1/imbalance/prices"
     ).mock(return_value=Response(400, json=error_response))
 
@@ -164,7 +164,7 @@ def test_get_imbalance_prices_bad_request(authenticated_client):
 @respx.mock
 def test_get_balancing_energy_bids_pagination(authenticated_client, mock_balancing_energy_bids_response):
     """Test pagination with balancing energy bids."""
-    route = respx.get(
+    respx.get(
         "https://api.balancing.services/v1/balancing/energy/bids"
     ).mock(return_value=Response(200, json=mock_balancing_energy_bids_response))
 
@@ -207,7 +207,7 @@ def test_authentication_header_included(authenticated_client, mock_imbalance_pri
 @respx.mock
 async def test_async_get_imbalance_prices(authenticated_client, mock_imbalance_prices_response):
     """Test async request for imbalance prices."""
-    route = respx.get(
+    respx.get(
         "https://api.balancing.services/v1/imbalance/prices"
     ).mock(return_value=Response(200, json=mock_imbalance_prices_response))
 

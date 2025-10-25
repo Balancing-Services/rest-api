@@ -63,7 +63,10 @@ def main():
 
             # Print individual prices for each period
             for price in imbalance_prices.prices:
-                print(f"  {price.period.start_at} to {price.period.end_at}: {price.price} {imbalance_prices.currency.value}/MWh")
+                print(
+                    f"  {price.period.start_at} to {price.period.end_at}: "
+                    f"{price.price} {imbalance_prices.currency.value}/MWh"
+                )
             print()
 
     elif response.status_code == 401:
