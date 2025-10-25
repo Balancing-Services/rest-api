@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Support for `symmetric` direction in balancing services to enable FCR (Frequency Containment Reserve) products
 - Version bumping script (`scripts/bump-version.sh`) to automate version updates across repository files
 - Automated Python client publishing workflow
 
