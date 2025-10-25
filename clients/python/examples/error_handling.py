@@ -14,6 +14,7 @@ Usage:
 import argparse
 import random
 import time
+
 from balancing_services import AuthenticatedClient
 from balancing_services.api.default import get_balancing_capacity_prices
 
@@ -115,6 +116,7 @@ def fetch_with_retry(client, area, reserve_type, period_start, period_end, max_r
 
 def main():
     from dateutil.parser import isoparse
+
     from balancing_services.models import Area, ReserveType
 
     parser = argparse.ArgumentParser(description="Demonstrate error handling with retry logic")

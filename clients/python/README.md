@@ -241,6 +241,72 @@ Generates `pyproject.toml` from the template with the current version from `open
 ./generate-pyproject.sh
 ```
 
+This script is automatically called by `check.sh` and `test-and-publish.sh`.
+
+#### `check.sh`
+Runs all quality checks in one command:
+
+```bash
+./check.sh
+```
+
+Performs:
+- Generates `pyproject.toml` from draft
+- Runs tests with pytest
+- Runs linting with ruff
+- Runs type checking with mypy
+- Verifies the package builds
+
+#### `test-and-publish.sh`
+Complete publishing workflow with TestPyPI validation:
+
+**Setup:**
+1. Copy `.env.sample` to `.env` and fill in your credentials:
+   ```bash
+   cp .env.sample .env
+   # Edit .env and add:
+   #   BALANCING_SERVICES_API_KEY (required - for testing against live API)
+   #   UV_PUBLISH_TOKEN_TESTPYPI (required)
+   #   UV_PUBLISH_TOKEN_PYPI (required)
+   ```
+
+2. Run the publish script:
+   ```bash
+   ./test-and-publish.sh
+   ```
+
+**Emergency option** - skip API tests if the server is down:
+```bash
+./test-and-publish.sh --skip-api-tests
+```
+⚠️ This skips testing against the live API. Use only in emergencies!
+
+Alternatively, export variables manually:
+```bash
+export BALANCING_SERVICES_API_KEY="your-api-key"
+export UV_PUBLISH_TOKEN_TESTPYPI="your-testpypi-token"
+export UV_PUBLISH_TOKEN_PYPI="your-pypi-token"
+./test-and-publish.sh
+```
+
+**What it does:**
+1. Loads credentials from `.env` (if present)
+2. Verifies all required environment variables are set
+3. Runs quality checks
+4. Publishes to TestPyPI using `UV_PUBLISH_TOKEN_TESTPYPI`
+5. Creates isolated test sandbox
+6. Installs package from TestPyPI
+7. Runs all example scripts against live API using `BALANCING_SERVICES_API_KEY`
+8. Prompts to publish to PyPI using `UV_PUBLISH_TOKEN_PYPI` if tests pass
+9. Verifies production PyPI package by installing and running examples again
+
+**Get your credentials:**
+- API Key: https://balancing.services
+- TestPyPI: https://test.pypi.org/manage/account/token/
+- PyPI: https://pypi.org/manage/account/token/
+
+**For maintainers:** See `../../scripts/README.md` for the complete release workflow.
+
 ## Troubleshooting
 
 ### Authentication Errors (401)

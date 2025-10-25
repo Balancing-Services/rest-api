@@ -13,6 +13,7 @@ Usage:
 
 import argparse
 from datetime import datetime, timedelta, timezone
+
 from balancing_services import AuthenticatedClient
 from balancing_services.api.default import get_balancing_energy_bids
 from balancing_services.models import Area, ReserveType
@@ -102,7 +103,7 @@ def main():
 
         page_number += 1
 
-    print(f"\nSummary:")
+    print("\nSummary:")
     print(f"  Total pages fetched: {page_number}")
     print(f"  Total bid groups: {total_bid_groups}")
     print(f"  Total bids: {total_bids}")

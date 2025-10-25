@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Version bumping script (`scripts/bump-version.sh`) to automate version updates across repository files
+- Automated Python client publishing workflow
+
 ## [1.1.1] - 2025-10-24
 
 ### Fixed
