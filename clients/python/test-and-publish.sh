@@ -26,18 +26,24 @@ PYTHON_CLIENT_DIR="$(pwd)"
 
 # Parse command line arguments
 SKIP_API_TESTS=false
+SKIP_TESTPYPI_UPLOAD=false
 while [[ $# -gt 0 ]]; do
     case $1 in
         --skip-api-tests)
             SKIP_API_TESTS=true
             shift
             ;;
+        --skip-testpypi-upload)
+            SKIP_TESTPYPI_UPLOAD=true
+            shift
+            ;;
         --help|-h)
             echo "Usage: $0 [OPTIONS]"
             echo ""
             echo "Options:"
-            echo "  --skip-api-tests    Skip testing examples against live API (emergency use only)"
-            echo "  --help, -h          Show this help message"
+            echo "  --skip-api-tests         Skip testing examples against live API (emergency use only)"
+            echo "  --skip-testpypi-upload   Skip uploading to TestPyPI (assumes package already uploaded)"
+            echo "  --help, -h               Show this help message"
             exit 0
             ;;
         *)
@@ -93,7 +99,7 @@ if [ "$SKIP_API_TESTS" = false ] && [ -z "$BALANCING_SERVICES_API_KEY" ]; then
     MISSING_VARS+=("BALANCING_SERVICES_API_KEY")
 fi
 
-if [ -z "$UV_PUBLISH_TOKEN_TESTPYPI" ]; then
+if [ "$SKIP_TESTPYPI_UPLOAD" = false ] && [ -z "$UV_PUBLISH_TOKEN_TESTPYPI" ]; then
     MISSING_VARS+=("UV_PUBLISH_TOKEN_TESTPYPI")
 fi
 
@@ -166,23 +172,32 @@ echo ""
 ./check.sh
 
 # Step 2: Publish to TestPyPI
-echo -e "${BLUE}========================================${NC}"
-echo -e "${BLUE}Step 2: Publishing to TestPyPI${NC}"
-echo -e "${BLUE}========================================${NC}"
-echo ""
+if [ "$SKIP_TESTPYPI_UPLOAD" = false ]; then
+    echo -e "${BLUE}========================================${NC}"
+    echo -e "${BLUE}Step 2: Publishing to TestPyPI${NC}"
+    echo -e "${BLUE}========================================${NC}"
+    echo ""
 
-echo -e "${YELLOW}► Publishing to TestPyPI...${NC}"
-UV_PUBLISH_TOKEN="$UV_PUBLISH_TOKEN_TESTPYPI" uv publish --publish-url https://test.pypi.org/legacy/
+    echo -e "${YELLOW}► Publishing to TestPyPI...${NC}"
+    UV_PUBLISH_TOKEN="$UV_PUBLISH_TOKEN_TESTPYPI" uv publish --publish-url https://test.pypi.org/legacy/
 
-echo -e "${GREEN}✓ Published to TestPyPI${NC}"
-echo ""
-echo "View at: https://test.pypi.org/project/${PACKAGE_NAME}/${VERSION}/"
-echo ""
+    echo -e "${GREEN}✓ Published to TestPyPI${NC}"
+    echo ""
+    echo "View at: https://test.pypi.org/project/${PACKAGE_NAME}/${VERSION}/"
+    echo ""
 
-# Wait a bit for TestPyPI to process the upload
-echo -e "${YELLOW}Waiting 10 seconds for TestPyPI to process the upload...${NC}"
-sleep 10
-echo ""
+    # Wait a bit for TestPyPI to process the upload
+    echo -e "${YELLOW}Waiting 10 seconds for TestPyPI to process the upload...${NC}"
+    sleep 10
+    echo ""
+else
+    echo -e "${BLUE}========================================${NC}"
+    echo -e "${BLUE}Step 2: Skipping TestPyPI Upload${NC}"
+    echo -e "${BLUE}========================================${NC}"
+    echo ""
+    echo -e "${YELLOW}⚠ Skipping TestPyPI upload (assuming version ${VERSION} already exists)${NC}"
+    echo ""
+fi
 
 # Step 3: Create test sandbox
 echo -e "${BLUE}========================================${NC}"
