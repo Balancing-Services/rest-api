@@ -1639,6 +1639,9 @@ components:
       enum:
         - BGN
         - EUR
+        - HUF
+        - PLN
+        - RON
 
     ActivationType:
       type: string
