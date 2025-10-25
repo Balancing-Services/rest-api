@@ -228,6 +228,19 @@ ruff check .
 mypy balancing_services
 ```
 
+### Automation Scripts
+
+The Python client includes automation scripts for development and publishing:
+
+#### `generate-pyproject.sh`
+Generates `pyproject.toml` from the template with the current version from `openapi.yaml`.
+
+**Note:** The version is stored in `openapi.yaml` (single source of truth). The `pyproject.toml.draft` template contains invalid TOML (`version = __VERSION__` without quotes) to prevent accidental use without proper generation.
+
+```bash
+./generate-pyproject.sh
+```
+
 ## Troubleshooting
 
 ### Authentication Errors (401)
