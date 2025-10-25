@@ -1393,6 +1393,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BalancingCapacityPrice'
+        procuredAt:
+          type: string
+          format: date-time
+          description: |
+            **EXPERIMENTAL**: Timestamp when the capacity was procured (allocation time or gate closure time).
+            Used to distinguish different auctions (e.g., yearly vs hourly, or multiple procurement rounds).
+            This field is experimental and may be changed or removed without a deprecation period.
+          example: "2024-08-15T14:30:00Z"
+          x-experimental: true
 
     BalancingCapacityPrice:
       type: object
@@ -1406,15 +1415,6 @@ components:
           type: number
           description: Price per MW per hour in the specified currency
           example: 12.50
-        procuredAt:
-          type: string
-          format: date-time
-          description: |
-            **EXPERIMENTAL**: Timestamp when the capacity was procured (allocation time or gate closure time).
-            Used to distinguish different auctions (e.g., yearly vs hourly, or multiple procurement rounds).
-            This field is experimental and may be changed or removed without a deprecation period.
-          example: "2024-08-15T14:30:00Z"
-          x-experimental: true
 
     BalancingCapacityVolumesResponse:
       type: object
@@ -1460,6 +1460,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BalancingCapacityVolume'
+        procuredAt:
+          type: string
+          format: date-time
+          description: |
+            **EXPERIMENTAL**: Timestamp when the capacity was procured (allocation time or gate closure time).
+            Used to distinguish different auctions (e.g., yearly vs hourly, or multiple procurement rounds).
+            This field is experimental and may be changed or removed without a deprecation period.
+          example: "2024-08-15T14:30:00Z"
+          x-experimental: true
 
     BalancingCapacityVolume:
       type: object
@@ -1473,15 +1482,6 @@ components:
           type: number
           description: Volume in MW
           example: 50.0
-        procuredAt:
-          type: string
-          format: date-time
-          description: |
-            **EXPERIMENTAL**: Timestamp when the capacity was procured (allocation time or gate closure time).
-            Used to distinguish different auctions (e.g., yearly vs hourly, or multiple procurement rounds).
-            This field is experimental and may be changed or removed without a deprecation period.
-          example: "2024-08-15T14:30:00Z"
-          x-experimental: true
 
     Period:
       type: object

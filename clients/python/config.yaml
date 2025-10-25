@@ -1,2 +1,4 @@
 project_name_override: "balancing-services"
 package_name_override: "balancing_services"
+python_version: "3.10"
+use_union_operator: true
