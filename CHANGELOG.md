@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Move `procuredAt` field from individual price/volume items to `BalancingCapacityPrices` and `BalancingCapacityVolumes` containers
+
 ## [1.2.0] - 2025-10-25
 
 ### Added
