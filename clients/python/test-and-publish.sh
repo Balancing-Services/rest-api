@@ -70,6 +70,36 @@ cleanup() {
 # Set trap to cleanup on exit
 trap cleanup EXIT
 
+# Helper function to install package with retry logic
+# This will keep retrying until the package becomes available on the index
+install_with_retry() {
+    local max_retries=30  # 30 attempts * 10 seconds = 5 minutes max
+    local retry=1
+    local install_cmd="$@"
+
+    while [ $retry -le $max_retries ]; do
+        if [ $retry -eq 1 ]; then
+            echo -e "${YELLOW}  Attempting installation (will retry if package not yet available)...${NC}"
+        else
+            echo -e "${YELLOW}  Retry ${retry}/${max_retries}...${NC}"
+        fi
+
+        if eval "$install_cmd" 2>&1; then
+            echo -e "${GREEN}✓ Package installed successfully${NC}"
+            return 0
+        fi
+
+        if [ $retry -lt $max_retries ]; then
+            echo -e "${YELLOW}  Package not available yet, waiting 10 seconds before retry...${NC}"
+            sleep 10
+        fi
+        ((retry++))
+    done
+
+    echo -e "${RED}✗ Installation failed after ${max_retries} attempts (5 minutes)${NC}"
+    return 1
+}
+
 echo -e "${BLUE}========================================${NC}"
 echo -e "${BLUE}Test & Publish Pipeline${NC}"
 echo -e "${BLUE}========================================${NC}"
@@ -185,11 +215,6 @@ if [ "$SKIP_TESTPYPI_UPLOAD" = false ]; then
     echo ""
     echo "View at: https://test.pypi.org/project/${PACKAGE_NAME}/${VERSION}/"
     echo ""
-
-    # Wait a bit for TestPyPI to process the upload
-    echo -e "${YELLOW}Waiting 10 seconds for TestPyPI to process the upload...${NC}"
-    sleep 10
-    echo ""
 else
     echo -e "${BLUE}========================================${NC}"
     echo -e "${BLUE}Step 2: Skipping TestPyPI Upload${NC}"
@@ -224,9 +249,11 @@ echo ""
 echo -e "${YELLOW}► Installing ${PACKAGE_NAME} from TestPyPI...${NC}"
 # Use --index-url for TestPyPI and --extra-index-url for PyPI (for dependencies)
 # Use --index-strategy unsafe-best-match to allow searching both indexes for the package
-uv pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ --index-strategy unsafe-best-match "${PACKAGE_NAME}==${VERSION}"
-
-echo -e "${GREEN}✓ Package installed${NC}"
+# Use --no-cache to ensure we get the freshly published version
+if ! install_with_retry "uv --no-cache pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ --index-strategy unsafe-best-match \"${PACKAGE_NAME}==${VERSION}\""; then
+    echo -e "${RED}Error: Failed to install package from TestPyPI${NC}"
+    exit 1
+fi
 echo ""
 
 # Step 5: Run smoke tests using examples
@@ -346,11 +373,6 @@ if [ "$SKIP_API_TESTS" = false ]; then
     echo -e "${YELLOW}► Verifying production PyPI package...${NC}"
     echo ""
 
-    # Wait for PyPI to process the upload
-    echo -e "${YELLOW}Waiting 15 seconds for PyPI to process the upload...${NC}"
-    sleep 15
-    echo ""
-
     # Create new sandbox for PyPI verification
     PYPI_SANDBOX_DIR="/tmp/balancing-services-pypi-verify-$$"
     mkdir -p "$PYPI_SANDBOX_DIR"
@@ -362,8 +384,11 @@ if [ "$SKIP_API_TESTS" = false ]; then
     echo ""
 
     echo -e "${YELLOW}► Installing ${PACKAGE_NAME} from production PyPI...${NC}"
-    uv pip install "${PACKAGE_NAME}==${VERSION}"
-    echo -e "${GREEN}✓ Package installed from PyPI${NC}"
+    # Use --no-cache to ensure we get the freshly published version
+    if ! install_with_retry "uv --no-cache pip install \"${PACKAGE_NAME}==${VERSION}\""; then
+        echo -e "${RED}Error: Failed to install package from PyPI${NC}"
+        exit 1
+    fi
     echo ""
 
     # Copy examples to PyPI sandbox
