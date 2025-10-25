@@ -1389,10 +1389,6 @@ components:
           $ref: '#/components/schemas/Direction'
         currency:
           $ref: '#/components/schemas/Currency'
-        prices:
-          type: array
-          items:
-            $ref: '#/components/schemas/BalancingCapacityPrice'
         procuredAt:
           type: string
           format: date-time
@@ -1402,6 +1398,10 @@ components:
             This field is experimental and may be changed or removed without a deprecation period.
           example: "2024-08-15T14:30:00Z"
           x-experimental: true
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/BalancingCapacityPrice'
 
     BalancingCapacityPrice:
       type: object
@@ -1456,10 +1456,6 @@ components:
           $ref: '#/components/schemas/ReserveType'
         direction:
           $ref: '#/components/schemas/Direction'
-        volumes:
-          type: array
-          items:
-            $ref: '#/components/schemas/BalancingCapacityVolume'
         procuredAt:
           type: string
           format: date-time
@@ -1469,6 +1465,10 @@ components:
             This field is experimental and may be changed or removed without a deprecation period.
           example: "2024-08-15T14:30:00Z"
           x-experimental: true
+        volumes:
+          type: array
+          items:
+            $ref: '#/components/schemas/BalancingCapacityVolume'
 
     BalancingCapacityVolume:
       type: object
