@@ -40,6 +40,7 @@ The README should focus on:
 ### CHANGELOG.md
 
 - Follow [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format
+- **Add a changelog entry for every change** - Document changes in the `[Unreleased]` section immediately when making them
 - Document all changes under appropriate categories (Added, Changed, Deprecated, Removed, Fixed, Security)
 - Update version links at the bottom when creating new releases
 
