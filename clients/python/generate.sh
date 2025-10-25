@@ -47,5 +47,8 @@ uvx openapi-python-client generate \
     --config config.yaml \
     --meta none
 
+echo "Fixing types with Ruff..."
+uvx ruff check --fix balancing_services --exit-zero --quiet || true
+
 echo "Client generation complete!"
 echo "Generated code is in: balancing_services/"
