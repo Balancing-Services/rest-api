@@ -13,6 +13,7 @@ Usage:
 
 import argparse
 from datetime import datetime, timedelta, timezone
+
 from balancing_services import AuthenticatedClient
 from balancing_services.api.default import get_imbalance_prices
 from balancing_services.models import Area
