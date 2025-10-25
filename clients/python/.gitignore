@@ -75,3 +75,6 @@ uv.lock
 
 # Generated from pyproject.toml.draft
 pyproject.toml
+
+# Environment variables (contains secrets)
+.env
