@@ -71,7 +71,8 @@ def fetch_with_retry(client, area, reserve_type, period_start, period_end, max_r
         # Forbidden
         elif response.status_code == 403:
             error = response.parsed
-            print(f"Error: Access forbidden - {error.detail if hasattr(error, 'detail') else 'Insufficient permissions'}")
+            detail = error.detail if hasattr(error, 'detail') else 'Insufficient permissions'
+            print(f"Error: Access forbidden - {detail}")
             return None
 
         # Not found
