@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Support for Germany (DE) as a unified area in addition to existing German TSO areas
+
 ## [1.4.1] - 2025-10-25
 
 ### Changed

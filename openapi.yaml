@@ -1509,6 +1509,7 @@ components:
         - BG
         - CH
         - CZ
+        - DE
         - DE_50HERTZ
         - DE_AMPRION
         - DE_TENNET
@@ -1557,6 +1558,7 @@ components:
         - 10YCA-BULGARIA-R
         - 10YCH-SWISSGRIDZ
         - 10YCZ-CEPS-----N
+        - 10Y1001A1001A83F
         - 10YDE-VE-------2
         - 10YDE-RWENET---I
         - 10YDE-EON------1
