@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Balancing Services REST API
-  version: 1.4.1
+  version: 1.5.0
   description: REST API for balancing services data
   contact:
     name: Balancing Services Team
