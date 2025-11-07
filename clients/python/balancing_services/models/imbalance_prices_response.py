@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar, cast
 
@@ -19,16 +21,16 @@ class ImbalancePricesResponse:
     """
     Attributes:
         queried_period (Period):
-        data (list['ImbalancePrices']):
+        data (list[ImbalancePrices]):
         has_more (bool): Indicates whether there are more results available Example: True.
-        next_cursor (Union[None, Unset, str]): Cursor to fetch the next page of results. Null if no more results.
-            Example: v1:AAAAAYwBAgMEBQYHCAkKCw==.
+        next_cursor (None | str | Unset): Cursor to fetch the next page of results. Null if no more results. Example:
+            v1:AAAAAYwBAgMEBQYHCAkKCw==.
     """
 
-    queried_period: "Period"
-    data: list["ImbalancePrices"]
+    queried_period: Period
+    data: list[ImbalancePrices]
     has_more: bool
-    next_cursor: None | Unset | str = UNSET
+    next_cursor: None | str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -41,7 +43,7 @@ class ImbalancePricesResponse:
 
         has_more = self.has_more
 
-        next_cursor: None | Unset | str
+        next_cursor: None | str | Unset
         if isinstance(self.next_cursor, Unset):
             next_cursor = UNSET
         else:
@@ -78,12 +80,12 @@ class ImbalancePricesResponse:
 
         has_more = d.pop("hasMore")
 
-        def _parse_next_cursor(data: object) -> None | Unset | str:
+        def _parse_next_cursor(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         next_cursor = _parse_next_cursor(d.pop("nextCursor", UNSET))
 

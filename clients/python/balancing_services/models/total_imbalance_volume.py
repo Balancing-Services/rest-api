@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar
 
@@ -25,7 +27,7 @@ class TotalImbalanceVolume:
             - balanced: Generation equals consumption (D = 0)
     """
 
-    period: "Period"
+    period: Period
     average_power_mw: float
     direction: TotalImbalanceDirection
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)

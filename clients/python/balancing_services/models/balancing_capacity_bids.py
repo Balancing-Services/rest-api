@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar
 
@@ -26,7 +28,7 @@ class BalancingCapacityBids:
         reserve_type (ReserveType): Reserve type
         direction (Direction): Balancing direction
         currency (Currency): Currency code
-        bids (list['CapacityBid']):
+        bids (list[CapacityBid]):
     """
 
     area: Area
@@ -34,7 +36,7 @@ class BalancingCapacityBids:
     reserve_type: ReserveType
     direction: Direction
     currency: Currency
-    bids: list["CapacityBid"]
+    bids: list[CapacityBid]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:

@@ -7,6 +7,7 @@ class Area(str, Enum):
     BG = "BG"
     CH = "CH"
     CZ = "CZ"
+    DE = "DE"
     DE_50HERTZ = "DE_50HERTZ"
     DE_AMPRION = "DE_AMPRION"
     DE_TENNET = "DE_TENNET"

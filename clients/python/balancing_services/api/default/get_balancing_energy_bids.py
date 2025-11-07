@@ -19,8 +19,8 @@ def _get_kwargs(
     period_start_at: datetime.datetime,
     period_end_at: datetime.datetime,
     reserve_type: ReserveType,
-    cursor: Unset | str = UNSET,
-    limit: Unset | int = 100,
+    cursor: str | Unset = UNSET,
+    limit: int | Unset = 100,
 ) -> dict[str, Any]:
     params: dict[str, Any] = {}
 
@@ -118,8 +118,8 @@ def sync_detailed(
     period_start_at: datetime.datetime,
     period_end_at: datetime.datetime,
     reserve_type: ReserveType,
-    cursor: Unset | str = UNSET,
-    limit: Unset | int = 100,
+    cursor: str | Unset = UNSET,
+    limit: int | Unset = 100,
 ) -> Response[BalancingEnergyBidsResponse | Problem]:
     """Get balancing energy bids
 
@@ -131,15 +131,15 @@ def sync_detailed(
         period_start_at (datetime.datetime):  Example: 2025-01-01T00:00:00Z.
         period_end_at (datetime.datetime):  Example: 2025-01-02T00:00:00Z.
         reserve_type (ReserveType): Reserve type
-        cursor (Union[Unset, str]):  Example: v1:AAAAAYwBAgMEBQYHCAkKCw==.
-        limit (Union[Unset, int]):  Default: 100. Example: 100.
+        cursor (str | Unset):  Example: v1:AAAAAYwBAgMEBQYHCAkKCw==.
+        limit (int | Unset):  Default: 100. Example: 100.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[BalancingEnergyBidsResponse, Problem]]
+        Response[BalancingEnergyBidsResponse | Problem]
     """
 
     kwargs = _get_kwargs(
@@ -165,8 +165,8 @@ def sync(
     period_start_at: datetime.datetime,
     period_end_at: datetime.datetime,
     reserve_type: ReserveType,
-    cursor: Unset | str = UNSET,
-    limit: Unset | int = 100,
+    cursor: str | Unset = UNSET,
+    limit: int | Unset = 100,
 ) -> BalancingEnergyBidsResponse | Problem | None:
     """Get balancing energy bids
 
@@ -178,15 +178,15 @@ def sync(
         period_start_at (datetime.datetime):  Example: 2025-01-01T00:00:00Z.
         period_end_at (datetime.datetime):  Example: 2025-01-02T00:00:00Z.
         reserve_type (ReserveType): Reserve type
-        cursor (Union[Unset, str]):  Example: v1:AAAAAYwBAgMEBQYHCAkKCw==.
-        limit (Union[Unset, int]):  Default: 100. Example: 100.
+        cursor (str | Unset):  Example: v1:AAAAAYwBAgMEBQYHCAkKCw==.
+        limit (int | Unset):  Default: 100. Example: 100.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[BalancingEnergyBidsResponse, Problem]
+        BalancingEnergyBidsResponse | Problem
     """
 
     return sync_detailed(
@@ -207,8 +207,8 @@ async def asyncio_detailed(
     period_start_at: datetime.datetime,
     period_end_at: datetime.datetime,
     reserve_type: ReserveType,
-    cursor: Unset | str = UNSET,
-    limit: Unset | int = 100,
+    cursor: str | Unset = UNSET,
+    limit: int | Unset = 100,
 ) -> Response[BalancingEnergyBidsResponse | Problem]:
     """Get balancing energy bids
 
@@ -220,15 +220,15 @@ async def asyncio_detailed(
         period_start_at (datetime.datetime):  Example: 2025-01-01T00:00:00Z.
         period_end_at (datetime.datetime):  Example: 2025-01-02T00:00:00Z.
         reserve_type (ReserveType): Reserve type
-        cursor (Union[Unset, str]):  Example: v1:AAAAAYwBAgMEBQYHCAkKCw==.
-        limit (Union[Unset, int]):  Default: 100. Example: 100.
+        cursor (str | Unset):  Example: v1:AAAAAYwBAgMEBQYHCAkKCw==.
+        limit (int | Unset):  Default: 100. Example: 100.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[BalancingEnergyBidsResponse, Problem]]
+        Response[BalancingEnergyBidsResponse | Problem]
     """
 
     kwargs = _get_kwargs(
@@ -252,8 +252,8 @@ async def asyncio(
     period_start_at: datetime.datetime,
     period_end_at: datetime.datetime,
     reserve_type: ReserveType,
-    cursor: Unset | str = UNSET,
-    limit: Unset | int = 100,
+    cursor: str | Unset = UNSET,
+    limit: int | Unset = 100,
 ) -> BalancingEnergyBidsResponse | Problem | None:
     """Get balancing energy bids
 
@@ -265,15 +265,15 @@ async def asyncio(
         period_start_at (datetime.datetime):  Example: 2025-01-01T00:00:00Z.
         period_end_at (datetime.datetime):  Example: 2025-01-02T00:00:00Z.
         reserve_type (ReserveType): Reserve type
-        cursor (Union[Unset, str]):  Example: v1:AAAAAYwBAgMEBQYHCAkKCw==.
-        limit (Union[Unset, int]):  Default: 100. Example: 100.
+        cursor (str | Unset):  Example: v1:AAAAAYwBAgMEBQYHCAkKCw==.
+        limit (int | Unset):  Default: 100. Example: 100.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[BalancingEnergyBidsResponse, Problem]
+        BalancingEnergyBidsResponse | Problem
     """
 
     return (

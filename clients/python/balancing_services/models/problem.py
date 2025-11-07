@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import Any, TypeVar
 
@@ -17,13 +19,13 @@ class Problem:
         type_ (ProblemType): Problem type identifier
         title (str): Short, human-readable summary of the problem type
         status (int): HTTP status code
-        detail (Union[Unset, str]): Human-readable explanation specific to this occurrence
+        detail (str | Unset): Human-readable explanation specific to this occurrence
     """
 
     type_: ProblemType
     title: str
     status: int
-    detail: Unset | str = UNSET
+    detail: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar
 
@@ -27,7 +29,7 @@ class BalancingEnergyBids:
         direction (Direction): Balancing direction
         currency (Currency): Currency code
         standard_product (bool): Indicates if this is a European standard balancing product Example: True.
-        bids (list['EnergyBid']):
+        bids (list[EnergyBid]):
     """
 
     area: Area
@@ -36,7 +38,7 @@ class BalancingEnergyBids:
     direction: Direction
     currency: Currency
     standard_product: bool
-    bids: list["EnergyBid"]
+    bids: list[EnergyBid]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:

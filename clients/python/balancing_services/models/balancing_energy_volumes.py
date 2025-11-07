@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar
 
@@ -27,7 +29,7 @@ class BalancingEnergyVolumes:
         direction (Direction): Balancing direction
         activation_type (ActivationType): Activation type (only applicable for mFRR)
         standard_product (bool): Indicates if this is a European standard balancing product Example: True.
-        volumes (list['BalancingEnergyVolume']):
+        volumes (list[BalancingEnergyVolume]):
     """
 
     area: Area
@@ -36,7 +38,7 @@ class BalancingEnergyVolumes:
     direction: Direction
     activation_type: ActivationType
     standard_product: bool
-    volumes: list["BalancingEnergyVolume"]
+    volumes: list[BalancingEnergyVolume]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:

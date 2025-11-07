@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar
 
@@ -20,7 +22,7 @@ class EnergyBid:
         price (float): Bid price per MWh in the specified currency Example: 55.25.
     """
 
-    period: "Period"
+    period: Period
     volume: float
     price: float
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)

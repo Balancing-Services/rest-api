@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar
 
@@ -20,13 +22,13 @@ class ImbalanceTotalVolumes:
     Attributes:
         area (Area): Area code
         eic_code (EicCode): Energy Identification Code (EIC)
-        volumes (list['TotalImbalanceVolume']): Array of total imbalance volumes for each period, direction can vary per
+        volumes (list[TotalImbalanceVolume]): Array of total imbalance volumes for each period, direction can vary per
             period
     """
 
     area: Area
     eic_code: EicCode
-    volumes: list["TotalImbalanceVolume"]
+    volumes: list[TotalImbalanceVolume]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:

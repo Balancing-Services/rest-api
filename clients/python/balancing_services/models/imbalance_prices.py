@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar
 
@@ -24,14 +26,14 @@ class ImbalancePrices:
         eic_code (EicCode): Energy Identification Code (EIC)
         currency (Currency): Currency code
         direction (ImbalanceDirection): Imbalance direction
-        prices (list['ImbalancePrice']):
+        prices (list[ImbalancePrice]):
     """
 
     area: Area
     eic_code: EicCode
     currency: Currency
     direction: ImbalanceDirection
-    prices: list["ImbalancePrice"]
+    prices: list[ImbalancePrice]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:

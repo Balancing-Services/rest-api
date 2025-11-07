@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar
 
@@ -25,7 +27,7 @@ class CapacityBid:
             - accepted: Bid was accepted (at least partially accepted)
     """
 
-    period: "Period"
+    period: Period
     capacity: float
     price: float
     status: BidStatus

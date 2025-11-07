@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar
 
@@ -29,7 +31,7 @@ class BalancingEnergyPrices:
         activation_type (ActivationType): Activation type (only applicable for mFRR)
         currency (Currency): Currency code
         standard_product (bool): Indicates if this is a European standard balancing product Example: True.
-        prices (list['BalancingEnergyPrice']):
+        prices (list[BalancingEnergyPrice]):
     """
 
     area: Area
@@ -39,7 +41,7 @@ class BalancingEnergyPrices:
     activation_type: ActivationType
     currency: Currency
     standard_product: bool
-    prices: list["BalancingEnergyPrice"]
+    prices: list[BalancingEnergyPrice]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:

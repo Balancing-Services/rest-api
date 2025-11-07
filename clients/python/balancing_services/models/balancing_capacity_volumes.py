@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import datetime
 from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar
@@ -27,9 +29,9 @@ class BalancingCapacityVolumes:
         eic_code (EicCode): Energy Identification Code (EIC)
         reserve_type (ReserveType): Reserve type
         direction (Direction): Balancing direction
-        volumes (list['BalancingCapacityVolume']):
-        procured_at (Union[Unset, datetime.datetime]): **EXPERIMENTAL**: Timestamp when the capacity was procured
-            (allocation time or gate closure time).
+        volumes (list[BalancingCapacityVolume]):
+        procured_at (datetime.datetime | Unset): **EXPERIMENTAL**: Timestamp when the capacity was procured (allocation
+            time or gate closure time).
             Used to distinguish different auctions (e.g., yearly vs hourly, or multiple procurement rounds).
             This field is experimental and may be changed or removed without a deprecation period.
              Example: 2024-08-15T14:30:00Z.
@@ -39,8 +41,8 @@ class BalancingCapacityVolumes:
     eic_code: EicCode
     reserve_type: ReserveType
     direction: Direction
-    volumes: list["BalancingCapacityVolume"]
-    procured_at: Unset | datetime.datetime = UNSET
+    volumes: list[BalancingCapacityVolume]
+    procured_at: datetime.datetime | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -57,7 +59,7 @@ class BalancingCapacityVolumes:
             volumes_item = volumes_item_data.to_dict()
             volumes.append(volumes_item)
 
-        procured_at: Unset | str = UNSET
+        procured_at: str | Unset = UNSET
         if not isinstance(self.procured_at, Unset):
             procured_at = self.procured_at.isoformat()
 
@@ -98,7 +100,7 @@ class BalancingCapacityVolumes:
             volumes.append(volumes_item)
 
         _procured_at = d.pop("procuredAt", UNSET)
-        procured_at: Unset | datetime.datetime
+        procured_at: datetime.datetime | Unset
         if isinstance(_procured_at, Unset):
             procured_at = UNSET
         else:

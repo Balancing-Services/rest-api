@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar
 
@@ -19,7 +21,7 @@ class BalancingEnergyPrice:
         price (float): Price per MWh in the specified currency Example: 45.5.
     """
 
-    period: "Period"
+    period: Period
     price: float
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
