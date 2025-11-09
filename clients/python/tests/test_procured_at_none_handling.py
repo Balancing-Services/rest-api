@@ -1,6 +1,7 @@
 """Tests for handling None/null values in procuredAt field."""
 import datetime
 from typing import Any
+
 from balancing_services.models.balancing_capacity_prices import BalancingCapacityPrices
 from balancing_services.models.balancing_capacity_volumes import BalancingCapacityVolumes
 from balancing_services.types import UNSET
