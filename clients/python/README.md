@@ -380,7 +380,7 @@ area="EE"  # String might work but not type-safe
 ## Documentation
 
 - **API Documentation:** https://api.balancing.services/v1/documentation
-- **OpenAPI Spec:** [openapi.yaml](../../openapi.yaml)
+- **OpenAPI Spec:** [openapi.yaml](https://github.com/Balancing-Services/rest-api/blob/main/openapi.yaml)
 - **Main Repository:** https://github.com/balancing-services/rest-api
 
 ## Support
@@ -391,8 +391,8 @@ area="EE"  # String might work but not type-safe
 
 ## License
 
-MIT License - see [LICENSE](../../LICENSE) for details.
+MIT License - see [LICENSE](https://github.com/Balancing-Services/rest-api/blob/main/LICENSE) for details.
 
 ## Changelog
 
-See [CHANGELOG.md](../../CHANGELOG.md) for version history and changes.
+See [CHANGELOG.md](https://github.com/Balancing-Services/rest-api/blob/main/CHANGELOG.md) for version history and changes.
