@@ -1392,6 +1392,7 @@ components:
         procuredAt:
           type: string
           format: date-time
+          nullable: true
           description: |
             **EXPERIMENTAL**: Timestamp when the capacity was procured (allocation time or gate closure time).
             Used to distinguish different auctions (e.g., yearly vs hourly, or multiple procurement rounds).
@@ -1459,6 +1460,7 @@ components:
         procuredAt:
           type: string
           format: date-time
+          nullable: true
           description: |
             **EXPERIMENTAL**: Timestamp when the capacity was procured (allocation time or gate closure time).
             Used to distinguish different auctions (e.g., yearly vs hourly, or multiple procurement rounds).

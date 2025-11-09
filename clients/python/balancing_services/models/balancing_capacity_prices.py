@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import datetime
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -32,8 +32,8 @@ class BalancingCapacityPrices:
         direction (Direction): Balancing direction
         currency (Currency): Currency code
         prices (list[BalancingCapacityPrice]):
-        procured_at (datetime.datetime | Unset): **EXPERIMENTAL**: Timestamp when the capacity was procured (allocation
-            time or gate closure time).
+        procured_at (datetime.datetime | None | Unset): **EXPERIMENTAL**: Timestamp when the capacity was procured
+            (allocation time or gate closure time).
             Used to distinguish different auctions (e.g., yearly vs hourly, or multiple procurement rounds).
             This field is experimental and may be changed or removed without a deprecation period.
              Example: 2024-08-15T14:30:00Z.
@@ -45,7 +45,7 @@ class BalancingCapacityPrices:
     direction: Direction
     currency: Currency
     prices: list[BalancingCapacityPrice]
-    procured_at: datetime.datetime | Unset = UNSET
+    procured_at: datetime.datetime | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -64,9 +64,13 @@ class BalancingCapacityPrices:
             prices_item = prices_item_data.to_dict()
             prices.append(prices_item)
 
-        procured_at: str | Unset = UNSET
-        if not isinstance(self.procured_at, Unset):
+        procured_at: None | str | Unset
+        if isinstance(self.procured_at, Unset):
+            procured_at = UNSET
+        elif isinstance(self.procured_at, datetime.datetime):
             procured_at = self.procured_at.isoformat()
+        else:
+            procured_at = self.procured_at
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -107,12 +111,22 @@ class BalancingCapacityPrices:
 
             prices.append(prices_item)
 
-        _procured_at = d.pop("procuredAt", UNSET)
-        procured_at: datetime.datetime | Unset
-        if isinstance(_procured_at, Unset):
-            procured_at = UNSET
-        else:
-            procured_at = isoparse(_procured_at)
+        def _parse_procured_at(data: object) -> datetime.datetime | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                procured_at_type_0 = isoparse(data)
+
+                return procured_at_type_0
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(datetime.datetime | None | Unset, data)
+
+        procured_at = _parse_procured_at(d.pop("procuredAt", UNSET))
 
         balancing_capacity_prices = cls(
             area=area,
