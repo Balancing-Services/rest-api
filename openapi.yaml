@@ -321,6 +321,118 @@ paths:
                 not-implemented:
                   $ref: '#/components/examples/problem-not-implemented'
 
+  /balancing/energy/offered-volumes:
+    get:
+      summary: Get offered balancing energy volumes
+      description: |
+        **EXPERIMENTAL**: Returns offered balancing energy volumes for the specified area within the given time period.
+        Volumes are expressed as (average) power in MW.
+
+        This endpoint is experimental and may be changed or removed without a deprecation period.
+      operationId: getBalancingEnergyOfferedVolumes
+      x-experimental: true
+      parameters:
+        - name: area
+          in: query
+          description: The area for which to retrieve data
+          required: true
+          schema:
+            $ref: '#/components/schemas/Area'
+          example: 'EE'
+        - name: period-start-at
+          in: query
+          description: Start of the time period (UTC)
+          required: true
+          schema:
+            type: string
+            format: date-time
+            example: '2025-01-01T00:00:00Z'
+        - name: period-end-at
+          in: query
+          description: End of the time period (UTC)
+          required: true
+          schema:
+            type: string
+            format: date-time
+            example: '2025-01-02T00:00:00Z'
+        - name: reserve-type
+          in: query
+          description: Filter by reserve type
+          required: true
+          schema:
+            $ref: '#/components/schemas/ReserveType'
+          example: 'aFRR'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalancingEnergyVolumesResponse'
+        '400':
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                invalid-parameter:
+                  $ref: '#/components/examples/problem-invalid-parameter'
+        '401':
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                unauthorized:
+                  $ref: '#/components/examples/problem-unauthorized'
+        '403':
+          description: Forbidden
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                forbidden:
+                  $ref: '#/components/examples/problem-forbidden'
+        '404':
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                not-found:
+                  $ref: '#/components/examples/problem-not-found'
+        '429':
+          description: Too many requests
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                rate-limited:
+                  $ref: '#/components/examples/problem-rate-limited'
+        '500':
+          description: Internal server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                internal-error:
+                  $ref: '#/components/examples/problem-internal-error'
+        '501':
+          description: Not implemented
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                not-implemented:
+                  $ref: '#/components/examples/problem-not-implemented'
+
   /balancing/energy/prices:
     get:
       summary: Get balancing energy prices
