@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-01-30
+
 ### Added
 - Experimental endpoint for offered balancing energy volumes (`/balancing/energy/offered-volumes`)
 - Experimental endpoint for cross-zonal capacity allocation (`/balancing/capacity/cross-zonal-allocation`)
@@ -84,7 +86,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - UTC timestamp-based period filtering
 - OpenAPI 3.0.3 specification
 
-[Unreleased]: https://github.com/balancing-services/rest-api/compare/v1.5.1...HEAD
+[Unreleased]: https://github.com/balancing-services/rest-api/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/balancing-services/rest-api/compare/v1.5.1...v1.6.0
 [1.5.1]: https://github.com/balancing-services/rest-api/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/balancing-services/rest-api/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/balancing-services/rest-api/compare/v1.4.0...v1.4.1
