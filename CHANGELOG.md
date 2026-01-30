@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Experimental endpoint for offered balancing energy volumes (`/balancing/energy/offered-volumes`)
+- Experimental endpoint for cross-zonal capacity allocation (`/balancing/capacity/cross-zonal-allocation`)
 
 ## [1.5.1] - 2025-11-09
 
