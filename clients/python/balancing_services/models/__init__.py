@@ -20,6 +20,8 @@ from .balancing_energy_volumes import BalancingEnergyVolumes
 from .balancing_energy_volumes_response import BalancingEnergyVolumesResponse
 from .bid_status import BidStatus
 from .capacity_bid import CapacityBid
+from .cross_zonal_capacity_allocation_response import CrossZonalCapacityAllocationResponse
+from .cross_zonal_volumes import CrossZonalVolumes
 from .currency import Currency
 from .direction import Direction
 from .eic_code import EicCode
@@ -58,6 +60,8 @@ __all__ = (
     "BalancingEnergyVolumesResponse",
     "BidStatus",
     "CapacityBid",
+    "CrossZonalCapacityAllocationResponse",
+    "CrossZonalVolumes",
     "Currency",
     "Direction",
     "EicCode",
