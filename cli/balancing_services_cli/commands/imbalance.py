@@ -11,7 +11,7 @@ from balancing_services.models import Area
 
 from balancing_services_cli.client_factory import make_client
 from balancing_services_cli.flatten import IMBALANCE_PRICES, IMBALANCE_VOLUMES, flatten_response
-from balancing_services_cli.output import write_rows
+from balancing_services_cli.output import format_api_error, write_rows
 from balancing_services_cli.types import ISO8601
 
 log = logging.getLogger(__name__)
@@ -39,10 +39,10 @@ def imbalance_prices(ctx: click.Context, area: str, start: datetime, end: dateti
         period_start_at=start,
         period_end_at=end,
     )
+    if response.status_code != 200:
+        raise SystemExit(format_api_error(response))
     n_groups = len(response.parsed.data) if response.parsed else 0
     log.debug("Response: HTTP %d, %d group(s)", response.status_code, n_groups)
-    if response.status_code != 200:
-        raise SystemExit(f"API error (HTTP {response.status_code}): {response.content.decode()}")
     rows = flatten_response(response.parsed.data, IMBALANCE_PRICES)
     log.debug("Flattened to %d row(s)", len(rows))
     write_rows(rows, ctx.obj["output"], ctx.obj["fmt"])
@@ -68,10 +68,10 @@ def imbalance_volumes(ctx: click.Context, area: str, start: datetime, end: datet
         period_start_at=start,
         period_end_at=end,
     )
+    if response.status_code != 200:
+        raise SystemExit(format_api_error(response))
     n_groups = len(response.parsed.data) if response.parsed else 0
     log.debug("Response: HTTP %d, %d group(s)", response.status_code, n_groups)
-    if response.status_code != 200:
-        raise SystemExit(f"API error (HTTP {response.status_code}): {response.content.decode()}")
     rows = flatten_response(response.parsed.data, IMBALANCE_VOLUMES)
     log.debug("Flattened to %d row(s)", len(rows))
     write_rows(rows, ctx.obj["output"], ctx.obj["fmt"])

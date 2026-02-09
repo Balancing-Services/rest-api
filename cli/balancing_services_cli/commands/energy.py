@@ -22,7 +22,7 @@ from balancing_services_cli.flatten import (
     ENERGY_PRICES,
     flatten_response,
 )
-from balancing_services_cli.output import write_rows
+from balancing_services_cli.output import format_api_error, write_rows
 from balancing_services_cli.pagination import fetch_all_pages
 from balancing_services_cli.types import ISO8601
 
@@ -62,10 +62,10 @@ def energy_activated(ctx: click.Context, area: str, start: datetime, end: dateti
         period_end_at=end,
         reserve_type=ReserveType(reserve_type),
     )
+    if response.status_code != 200:
+        raise SystemExit(format_api_error(response))
     n_groups = len(response.parsed.data) if response.parsed else 0
     log.debug("Response: HTTP %d, %d group(s)", response.status_code, n_groups)
-    if response.status_code != 200:
-        raise SystemExit(f"API error (HTTP {response.status_code}): {response.content.decode()}")
     rows = flatten_response(response.parsed.data, ENERGY_ACTIVATED)
     log.debug("Flattened to %d row(s)", len(rows))
     write_rows(rows, ctx.obj["output"], ctx.obj["fmt"])
@@ -101,10 +101,10 @@ def energy_offered(ctx: click.Context, area: str, start: datetime, end: datetime
         period_end_at=end,
         reserve_type=ReserveType(reserve_type),
     )
+    if response.status_code != 200:
+        raise SystemExit(format_api_error(response))
     n_groups = len(response.parsed.data) if response.parsed else 0
     log.debug("Response: HTTP %d, %d group(s)", response.status_code, n_groups)
-    if response.status_code != 200:
-        raise SystemExit(f"API error (HTTP {response.status_code}): {response.content.decode()}")
     rows = flatten_response(response.parsed.data, ENERGY_OFFERED)
     log.debug("Flattened to %d row(s)", len(rows))
     write_rows(rows, ctx.obj["output"], ctx.obj["fmt"])
@@ -140,10 +140,10 @@ def energy_prices(ctx: click.Context, area: str, start: datetime, end: datetime,
         period_end_at=end,
         reserve_type=ReserveType(reserve_type),
     )
+    if response.status_code != 200:
+        raise SystemExit(format_api_error(response))
     n_groups = len(response.parsed.data) if response.parsed else 0
     log.debug("Response: HTTP %d, %d group(s)", response.status_code, n_groups)
-    if response.status_code != 200:
-        raise SystemExit(f"API error (HTTP {response.status_code}): {response.content.decode()}")
     rows = flatten_response(response.parsed.data, ENERGY_PRICES)
     log.debug("Flattened to %d row(s)", len(rows))
     write_rows(rows, ctx.obj["output"], ctx.obj["fmt"])

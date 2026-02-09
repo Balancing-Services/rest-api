@@ -8,7 +8,18 @@ import logging
 import sys
 from typing import Any
 
+from balancing_services.models import Problem
+
 log = logging.getLogger(__name__)
+
+
+def format_api_error(response: Any) -> str:
+    """Format a user-friendly error message from an API error response."""
+    parsed = response.parsed
+    if isinstance(parsed, Problem):
+        detail = f": {parsed.detail}" if isinstance(parsed.detail, str) else ""
+        return f"API error (HTTP {parsed.status}): {parsed.title}{detail}"
+    return f"API error (HTTP {response.status_code}): {response.content.decode()}"
 
 
 def detect_format(output: str | None, fmt: str | None) -> str:
