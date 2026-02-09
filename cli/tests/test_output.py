@@ -73,3 +73,24 @@ def test_write_parquet_no_output_raises():
 
     with pytest.raises(SystemExit, match="requires a file path"):
         write_rows([{"a": 1}], None, "parquet")
+
+
+def test_write_parquet_missing_pyarrow_raises():
+    import builtins
+    from unittest.mock import patch
+
+    import pytest
+
+    real_import = builtins.__import__
+
+    def block_pyarrow(name, *args, **kwargs):
+        if name in ("pyarrow", "pyarrow.parquet"):
+            raise ImportError("No module named 'pyarrow'")
+        return real_import(name, *args, **kwargs)
+
+    with patch("builtins.__import__", side_effect=block_pyarrow):
+        with pytest.raises(SystemExit) as exc_info:
+            write_rows([{"a": 1}], "out.parquet", "parquet")
+        msg = str(exc_info.value)
+        assert "pip install balancing-services-cli[parquet]" in msg
+        assert "uv add balancing-services-cli[parquet]" in msg
