@@ -10,6 +10,9 @@ from unittest.mock import patch
 
 from click.testing import CliRunner
 
+from balancing_services.models import Problem
+from balancing_services.models.problem_type import ProblemType
+
 from balancing_services_cli.main import cli
 
 # ── Stub API response objects ────────────────────────────────────────────
@@ -188,6 +191,38 @@ def test_api_error():
             ],
         )
     assert result.exit_code != 0
+
+
+def test_api_error_with_problem_response():
+    """When the API returns a Problem object, the CLI should show its title and detail."""
+    runner = CliRunner()
+    problem = Problem(
+        type_=ProblemType.MISSING_PARAMETER,
+        title="Missing required parameter",
+        status=400,
+        detail="Missing required parameter period-start-at.",
+    )
+    with patch(
+        "balancing_services_cli.commands.imbalance.get_imbalance_prices.sync_detailed",
+        return_value=StubResponse(status_code=400, parsed=problem),
+    ):
+        result = runner.invoke(
+            cli,
+            [
+                "--token",
+                "test-token",
+                "imbalance-prices",
+                "--area",
+                "EE",
+                "--start",
+                "2025-01-01",
+                "--end",
+                "2025-01-02",
+            ],
+        )
+    assert result.exit_code != 0
+    assert "Missing required parameter" in result.output
+    assert "period-start-at" in result.output
 
 
 def test_all_subcommands_listed():

@@ -6,6 +6,8 @@ import logging
 from collections.abc import Callable
 from typing import Any
 
+from balancing_services_cli.output import format_api_error
+
 log = logging.getLogger(__name__)
 
 
@@ -36,7 +38,7 @@ def fetch_all_pages(
         response = fetch_fn(**kwargs)
 
         if response.status_code != 200:
-            raise SystemExit(f"API error (HTTP {response.status_code}): {response.content.decode()}")
+            raise SystemExit(format_api_error(response))
 
         parsed = response.parsed
         all_data.extend(parsed.data)

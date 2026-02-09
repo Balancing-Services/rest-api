@@ -22,7 +22,7 @@ from balancing_services_cli.flatten import (
     CAPACITY_PROCURED,
     flatten_response,
 )
-from balancing_services_cli.output import write_rows
+from balancing_services_cli.output import format_api_error, write_rows
 from balancing_services_cli.pagination import fetch_all_pages
 from balancing_services_cli.types import ISO8601
 
@@ -99,10 +99,10 @@ def capacity_prices(ctx: click.Context, area: str, start: datetime, end: datetim
         period_end_at=end,
         reserve_type=ReserveType(reserve_type),
     )
+    if response.status_code != 200:
+        raise SystemExit(format_api_error(response))
     n_groups = len(response.parsed.data) if response.parsed else 0
     log.debug("Response: HTTP %d, %d group(s)", response.status_code, n_groups)
-    if response.status_code != 200:
-        raise SystemExit(f"API error (HTTP {response.status_code}): {response.content.decode()}")
     rows = flatten_response(response.parsed.data, CAPACITY_PRICES)
     log.debug("Flattened to %d row(s)", len(rows))
     write_rows(rows, ctx.obj["output"], ctx.obj["fmt"])
@@ -138,10 +138,10 @@ def capacity_procured(ctx: click.Context, area: str, start: datetime, end: datet
         period_end_at=end,
         reserve_type=ReserveType(reserve_type),
     )
+    if response.status_code != 200:
+        raise SystemExit(format_api_error(response))
     n_groups = len(response.parsed.data) if response.parsed else 0
     log.debug("Response: HTTP %d, %d group(s)", response.status_code, n_groups)
-    if response.status_code != 200:
-        raise SystemExit(f"API error (HTTP {response.status_code}): {response.content.decode()}")
     rows = flatten_response(response.parsed.data, CAPACITY_PROCURED)
     log.debug("Flattened to %d row(s)", len(rows))
     write_rows(rows, ctx.obj["output"], ctx.obj["fmt"])
@@ -177,10 +177,10 @@ def capacity_cross_zonal(ctx: click.Context, area: str, start: datetime, end: da
         period_end_at=end,
         reserve_type=ReserveType(reserve_type),
     )
+    if response.status_code != 200:
+        raise SystemExit(format_api_error(response))
     n_groups = len(response.parsed.data) if response.parsed else 0
     log.debug("Response: HTTP %d, %d group(s)", response.status_code, n_groups)
-    if response.status_code != 200:
-        raise SystemExit(f"API error (HTTP {response.status_code}): {response.content.decode()}")
     rows = flatten_response(response.parsed.data, CAPACITY_CROSS_ZONAL)
     log.debug("Flattened to %d row(s)", len(rows))
     write_rows(rows, ctx.obj["output"], ctx.obj["fmt"])
