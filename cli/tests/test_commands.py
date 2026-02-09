@@ -8,10 +8,9 @@ from enum import Enum
 from typing import Any
 from unittest.mock import patch
 
-from click.testing import CliRunner
-
 from balancing_services.models import Problem
 from balancing_services.models.problem_type import ProblemType
+from click.testing import CliRunner
 
 from balancing_services_cli.main import cli
 
@@ -223,6 +222,32 @@ def test_api_error_with_problem_response():
     assert result.exit_code != 0
     assert "Missing required parameter" in result.output
     assert "period-start-at" in result.output
+
+
+def test_naive_datetime_assumed_utc():
+    """Dates without timezone info should be treated as UTC when calling the API."""
+    runner = CliRunner()
+    with patch(
+        "balancing_services_cli.commands.imbalance.get_imbalance_prices.sync_detailed",
+        return_value=_make_imbalance_prices_response(),
+    ) as mock_fn:
+        runner.invoke(
+            cli,
+            [
+                "--token",
+                "test-token",
+                "imbalance-prices",
+                "--area",
+                "EE",
+                "--start",
+                "2025-01-01",
+                "--end",
+                "2025-01-02",
+            ],
+        )
+    call_kwargs = mock_fn.call_args[1]
+    assert call_kwargs["period_start_at"] == datetime(2025, 1, 1, tzinfo=timezone.utc)
+    assert call_kwargs["period_end_at"] == datetime(2025, 1, 2, tzinfo=timezone.utc)
 
 
 def test_all_subcommands_listed():
