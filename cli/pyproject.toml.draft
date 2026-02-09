@@ -1,0 +1,62 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "balancing-services-cli"
+version = __VERSION__
+description = "CLI for accessing European electricity balancing market data via the Balancing Services REST API"
+readme = {file = "README.md", content-type = "text/markdown"}
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Balancing Services Team"}
+]
+keywords = ["balancing", "electricity", "energy", "api", "cli", "power", "grid", "market", "europe", "imbalance"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "click>=8.0.0,<9.0.0",
+    "balancing-services>=__DEP_LOWER__,<__DEP_UPPER__",
+    "pyarrow>=14.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "ruff>=0.8.0",
+]
+
+[project.scripts]
+bs-cli = "balancing_services_cli.main:cli"
+
+[project.urls]
+Homepage = "https://balancing.services"
+Documentation = "https://api.balancing.services/v1/documentation"
+Repository = "https://github.com/balancing-services/rest-api"
+
+[tool.hatch.build.targets.wheel]
+packages = ["balancing_services_cli"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
