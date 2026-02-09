@@ -49,8 +49,19 @@ def _write_csv(rows: list[dict[str, Any]], output: str | None) -> None:
 
 
 def _write_parquet(rows: list[dict[str, Any]], output: str | None) -> None:
-    import pyarrow as pa
-    import pyarrow.parquet as pq
+    try:
+        import pyarrow as pa
+        import pyarrow.parquet as pq
+    except ImportError:
+        raise SystemExit(
+            "Parquet support requires the 'pyarrow' package.\n"
+            "\n"
+            "Install it with:\n"
+            "  pip install balancing-services-cli[parquet]\n"
+            "\n"
+            "Or, if using uv:\n"
+            "  uv add balancing-services-cli[parquet]"
+        )
 
     if not rows:
         return

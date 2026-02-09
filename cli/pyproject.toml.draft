@@ -27,12 +27,15 @@ classifiers = [
 dependencies = [
     "click>=8.0.0,<9.0.0",
     "balancing-services>=__DEP_LOWER__,<__DEP_UPPER__",
-    "pyarrow>=14.0.0",
 ]
 
 [project.optional-dependencies]
+parquet = [
+    "pyarrow>=14.0.0",
+]
 dev = [
     "pytest>=8.0.0",
+    "pyarrow>=14.0.0",
     "ruff>=0.8.0",
 ]
 
