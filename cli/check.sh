@@ -15,15 +15,33 @@ NC='\033[0m' # No Color
 # Navigate to CLI directory
 cd "$(dirname "$0")"
 
+# Parse command line arguments
+SKIP_GENERATE=false
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --skip-generate)
+            SKIP_GENERATE=true
+            shift
+            ;;
+        *)
+            echo -e "${RED}Error: Unknown option $1${NC}"
+            echo "Use --skip-generate to skip pyproject.toml generation"
+            exit 1
+            ;;
+    esac
+done
+
 echo -e "${BLUE}========================================${NC}"
 echo -e "${BLUE}Running CLI Quality Checks${NC}"
 echo -e "${BLUE}========================================${NC}"
 echo ""
 
 # Generate pyproject.toml from draft
-echo -e "${YELLOW}► Generating pyproject.toml...${NC}"
-./generate-pyproject.sh
-echo ""
+if [ "$SKIP_GENERATE" = false ]; then
+    echo -e "${YELLOW}► Generating pyproject.toml...${NC}"
+    ./generate-pyproject.sh
+    echo ""
+fi
 
 # Check if uv is installed
 if ! command -v uv &> /dev/null; then

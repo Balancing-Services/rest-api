@@ -217,7 +217,7 @@ echo -e "${BLUE}Step 1: Quality Checks${NC}"
 echo -e "${BLUE}========================================${NC}"
 echo ""
 
-./check.sh
+./check.sh --skip-generate
 
 # Step 2: Publish to TestPyPI
 if [ "$SKIP_TESTPYPI_UPLOAD" = false ]; then
