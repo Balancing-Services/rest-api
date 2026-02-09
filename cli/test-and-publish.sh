@@ -63,7 +63,8 @@ done
 PACKAGE_NAME="balancing-services-cli"
 SANDBOX_DIR="/tmp/balancing-services-cli-test-sandbox-$$"
 
-# Clean up leftover sandbox directories from previous interrupted runs
+# Clean up leftovers from previous runs
+rm -rf dist/
 for old_dir in /tmp/balancing-services-cli-test-sandbox-* /tmp/balancing-services-cli-pypi-verify-*; do
     if [ -d "$old_dir" ]; then
         echo -e "${YELLOW}Removing leftover sandbox: ${old_dir}${NC}"
