@@ -27,6 +27,12 @@ from balancing_services_cli.commands.imbalance import (
 
 @click.group()
 @click.option("--token", envvar="BALANCING_SERVICES_API_KEY", help="API bearer token.")
+@click.option(
+    "--base-url",
+    default="https://agents.balancing.services/api/v1",
+    show_default=True,
+    help="Base URL of the API server.",
+)
 @click.option("--output", "-o", default=None, help="Output file path (.csv, .parquet, .json).")
 @click.option(
     "--format",
@@ -38,7 +44,9 @@ from balancing_services_cli.commands.imbalance import (
 )
 @click.option("--verbose", "-v", is_flag=True, default=False, help="Print progress messages to stderr.")
 @click.pass_context
-def cli(ctx: click.Context, token: str | None, output: str | None, fmt: str | None, verbose: bool) -> None:
+def cli(
+    ctx: click.Context, token: str | None, base_url: str, output: str | None, fmt: str | None, verbose: bool
+) -> None:
     """Balancing Services CLI - access European electricity balancing market data."""
     if verbose:
         handler = logging.StreamHandler(sys.stderr)
@@ -48,6 +56,7 @@ def cli(ctx: click.Context, token: str | None, output: str | None, fmt: str | No
         pkg_logger.addHandler(handler)
     ctx.ensure_object(dict)
     ctx.obj["token"] = token
+    ctx.obj["base_url"] = base_url
     ctx.obj["output"] = output
     ctx.obj["fmt"] = fmt
     ctx.obj["verbose"] = verbose
