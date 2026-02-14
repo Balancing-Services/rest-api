@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from balancing_services_cli.pagination import fetch_all_pages
+from balancing_services_cli.pagination import fetch_all_pages, fetch_first_page
 
 
 @dataclass
@@ -66,3 +66,38 @@ def test_empty_data():
 
     result = fetch_all_pages(fetch_fn)
     assert result == []
+
+
+# ── fetch_first_page tests ───────────────────────────────────────────────
+
+
+def test_first_page_single_page():
+    def fetch_fn(**kwargs):
+        return StubResponse(status_code=200, parsed=StubParsed(data=["a", "b"], has_more=False))
+
+    result = fetch_first_page(fetch_fn)
+    assert result == ["a", "b"]
+
+
+def test_first_page_has_more():
+    """Even when there are more pages, fetch_first_page returns only the first."""
+    call_count = 0
+
+    def fetch_fn(**kwargs):
+        nonlocal call_count
+        call_count += 1
+        return StubResponse(status_code=200, parsed=StubParsed(data=["a"], has_more=True, next_cursor="c1"))
+
+    result = fetch_first_page(fetch_fn)
+    assert result == ["a"]
+    assert call_count == 1
+
+
+def test_first_page_api_error():
+    def fetch_fn(**kwargs):
+        return StubResponse(status_code=500, content=b"Internal Server Error")
+
+    import pytest
+
+    with pytest.raises(SystemExit, match="API error"):
+        fetch_first_page(fetch_fn)
