@@ -162,7 +162,6 @@ def test_missing_token():
                 "--end",
                 "2025-01-02",
             ],
-            env={"BALANCING_SERVICES_API_KEY": ""},
         )
     assert result.exit_code != 0
     assert "token" in result.output.lower()
