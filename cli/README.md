@@ -22,11 +22,10 @@ uvx balancing-services-cli imbalance-prices --area EE --start 2025-01-01T00:00:0
 
 ## Authentication
 
-Provide your API token via `--token` or the `BALANCING_SERVICES_API_KEY` environment variable:
+Provide your API token via the `--token` option:
 
 ```bash
-export BALANCING_SERVICES_API_KEY=your-token-here
-bs-cli imbalance-prices --area EE --start 2025-01-01T00:00:00Z --end 2025-01-02T00:00:00Z
+bs-cli --token your-token-here imbalance-prices --area EE --start 2025-01-01T00:00:00Z --end 2025-01-02T00:00:00Z
 ```
 
 ## Usage
@@ -75,6 +74,6 @@ bs-cli capacity-bids --area EE --start 2025-01-01T00:00:00Z --end 2025-01-02T00:
 
 | Option | Description |
 |---|---|
-| `--token` | API bearer token (or set `BALANCING_SERVICES_API_KEY`) |
+| `--token` | API bearer token |
 | `-o, --output` | Output file path (auto-detects format from `.csv`/`.parquet` extension) |
 | `-f, --format` | Override output format (`csv`, `parquet`) |

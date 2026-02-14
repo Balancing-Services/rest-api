@@ -26,7 +26,7 @@ from balancing_services_cli.commands.imbalance import (
 
 
 @click.group()
-@click.option("--token", envvar="BALANCING_SERVICES_API_KEY", help="API bearer token.")
+@click.option("--token", help="API bearer token.")
 @click.option(
     "--base-url",
     default="https://agents.balancing.services/api/v1",
