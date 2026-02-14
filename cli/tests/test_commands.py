@@ -249,6 +249,70 @@ def test_naive_datetime_assumed_utc():
     assert call_kwargs["period_end_at"] == datetime(2025, 1, 2, tzinfo=timezone.utc)
 
 
+BID_COMMANDS = ["energy-bids", "capacity-bids"]
+COMMON_BID_ARGS = ["--area", "EE", "--start", "2025-01-01", "--end", "2025-01-02", "--reserve-type", "aFRR"]
+
+
+@dataclass
+class StubBidsParsed:
+    data: list[Any]
+    has_more: bool = False
+    next_cursor: str | None = None
+
+
+def _make_bids_response():
+    return StubResponse(status_code=200, parsed=StubBidsParsed(data=[]))
+
+
+def test_bids_commands_require_all_or_first_page():
+    """energy-bids and capacity-bids must fail without --all or --first-page."""
+    runner = CliRunner()
+    for cmd in BID_COMMANDS:
+        result = runner.invoke(cli, ["--token", "test-token", cmd, *COMMON_BID_ARGS])
+        assert result.exit_code != 0, f"{cmd} should fail without --all/--first-page"
+        assert "--all" in result.output or "--first-page" in result.output
+
+
+def test_energy_bids_all_flag():
+    runner = CliRunner()
+    with patch(
+        "balancing_services_cli.commands.energy.get_balancing_energy_bids.sync_detailed",
+        return_value=_make_bids_response(),
+    ):
+        result = runner.invoke(cli, ["--token", "test-token", "energy-bids", "--all", *COMMON_BID_ARGS])
+    assert result.exit_code == 0, result.output
+
+
+def test_energy_bids_first_page_flag():
+    runner = CliRunner()
+    with patch(
+        "balancing_services_cli.commands.energy.get_balancing_energy_bids.sync_detailed",
+        return_value=_make_bids_response(),
+    ):
+        result = runner.invoke(cli, ["--token", "test-token", "energy-bids", "--first-page", *COMMON_BID_ARGS])
+    assert result.exit_code == 0, result.output
+
+
+def test_capacity_bids_all_flag():
+    runner = CliRunner()
+    with patch(
+        "balancing_services_cli.commands.capacity.get_balancing_capacity_bids.sync_detailed",
+        return_value=_make_bids_response(),
+    ):
+        result = runner.invoke(cli, ["--token", "test-token", "capacity-bids", "--all", *COMMON_BID_ARGS])
+    assert result.exit_code == 0, result.output
+
+
+def test_capacity_bids_first_page_flag():
+    runner = CliRunner()
+    with patch(
+        "balancing_services_cli.commands.capacity.get_balancing_capacity_bids.sync_detailed",
+        return_value=_make_bids_response(),
+    ):
+        result = runner.invoke(cli, ["--token", "test-token", "capacity-bids", "--first-page", *COMMON_BID_ARGS])
+    assert result.exit_code == 0, result.output
+
+
 def test_all_subcommands_listed():
     runner = CliRunner()
     result = runner.invoke(cli, ["--help"])

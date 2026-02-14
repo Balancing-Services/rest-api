@@ -23,7 +23,7 @@ from balancing_services_cli.flatten import (
     flatten_response,
 )
 from balancing_services_cli.output import format_api_error, write_rows
-from balancing_services_cli.pagination import fetch_all_pages
+from balancing_services_cli.pagination import fetch_all_pages, fetch_first_page
 from balancing_services_cli.types import ISO8601
 
 log = logging.getLogger(__name__)
@@ -47,17 +47,22 @@ RESERVE_TYPE_CHOICES = [r.value for r in ReserveType]
     type=click.Choice(RESERVE_TYPE_CHOICES, case_sensitive=False),
     help="Reserve type.",
 )
+@click.option("--all/--first-page", "fetch_all", default=None, help="Fetch all pages or only the first page.")
 @click.pass_context
-def capacity_bids(ctx: click.Context, area: str, start: datetime, end: datetime, reserve_type: str) -> None:
-    """Fetch balancing capacity bids (auto-paginates)."""
+def capacity_bids(
+    ctx: click.Context, area: str, start: datetime, end: datetime, reserve_type: str, fetch_all: bool | None,
+) -> None:
+    """Fetch balancing capacity bids."""
+    if fetch_all is None:
+        raise click.UsageError("You must specify either --all or --first-page.")
     client = make_client(ctx)
     log.debug(
         "GET /balancing/capacity/bids area=%s start=%s end=%s reserve_type=%s",
         area, start, end, reserve_type,
     )
-    data = fetch_all_pages(
+    fetch = fetch_all_pages if fetch_all else fetch_first_page
+    data = fetch(
         get_balancing_capacity_bids.sync_detailed,
-        verbose=ctx.obj["verbose"],
         client=client,
         area=Area(area),
         period_start_at=start,
