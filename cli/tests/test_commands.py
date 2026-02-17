@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import Enum
 from typing import Any
 from unittest.mock import patch
+from urllib.error import URLError
 
 from balancing_services.models import Problem
 from balancing_services.models.problem_type import ProblemType
@@ -327,6 +329,68 @@ def test_all_subcommands_listed():
         "capacity-prices",
         "capacity-procured",
         "capacity-cross-zonal",
+        "check-update",
     ]
     for cmd in expected:
         assert cmd in result.output, f"Missing subcommand: {cmd}"
+
+
+# ── Version / update tests ───────────────────────────────────────────────
+
+
+def test_version_flag():
+    runner = CliRunner()
+    result = runner.invoke(cli, ["--version"])
+    assert result.exit_code == 0
+    assert "bs-cli" in result.output
+    assert "version" in result.output
+
+
+def _make_pypi_response(version_str: str) -> bytes:
+    return json.dumps({"info": {"version": version_str}}).encode()
+
+
+def test_check_update_newer_available():
+    runner = CliRunner()
+    with patch(
+        "balancing_services_cli.commands.version.urllib.request.urlopen",
+    ) as mock_urlopen:
+        mock_urlopen.return_value.__enter__ = lambda s: s
+        mock_urlopen.return_value.__exit__ = lambda s, *a: None
+        mock_urlopen.return_value.read.return_value = _make_pypi_response("999.0.0")
+        result = runner.invoke(cli, ["check-update"])
+    assert result.exit_code == 0
+    data = json.loads(result.output)
+    assert data["update_available"] is True
+    assert data["latest_version"] == "999.0.0"
+    assert "current_version" in data
+
+
+def test_check_update_up_to_date():
+    from balancing_services_cli import __version__
+
+    runner = CliRunner()
+    with patch(
+        "balancing_services_cli.commands.version.urllib.request.urlopen",
+    ) as mock_urlopen:
+        mock_urlopen.return_value.__enter__ = lambda s: s
+        mock_urlopen.return_value.__exit__ = lambda s, *a: None
+        mock_urlopen.return_value.read.return_value = _make_pypi_response(__version__)
+        result = runner.invoke(cli, ["check-update"])
+    assert result.exit_code == 0
+    data = json.loads(result.output)
+    assert data["update_available"] is False
+    assert data["current_version"] == __version__
+    assert data["latest_version"] == __version__
+
+
+def test_check_update_network_error():
+    runner = CliRunner()
+    with patch(
+        "balancing_services_cli.commands.version.urllib.request.urlopen",
+        side_effect=URLError("Connection refused"),
+    ):
+        result = runner.invoke(cli, ["check-update"])
+    assert result.exit_code == 1
+    data = json.loads(result.output)
+    assert "error" in data

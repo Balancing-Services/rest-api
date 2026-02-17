@@ -7,6 +7,7 @@ import sys
 
 import click
 
+from balancing_services_cli import __version__
 from balancing_services_cli.commands.capacity import (
     capacity_bids,
     capacity_cross_zonal,
@@ -23,9 +24,11 @@ from balancing_services_cli.commands.imbalance import (
     imbalance_prices,
     imbalance_volumes,
 )
+from balancing_services_cli.commands.version import check_update
 
 
 @click.group()
+@click.version_option(version=__version__, prog_name="bs-cli")
 @click.option("--token", help="API bearer token.")
 @click.option(
     "--base-url",
@@ -72,3 +75,4 @@ cli.add_command(capacity_bids)
 cli.add_command(capacity_prices)
 cli.add_command(capacity_procured)
 cli.add_command(capacity_cross_zonal)
+cli.add_command(check_update)
